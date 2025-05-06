@@ -13,7 +13,7 @@ const float PX_SIDE = 459.f/24;
 const double Velocity = 3;
 sf::Vector2i Lady_Pos = {1,1};
 
-int gen(int a, int b)
+int gen(int a, int b) //Generate a Random Int from [a,b]
 {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -25,9 +25,9 @@ int toggle_direction(sf::Sprite &bug)
 {
     sf::Vector2f pos = bug.getPosition();
     
-    int direction = gen(1,4);
+    int direction = gen(1,4); // Get random number.
     
-        switch(direction)
+        switch(direction) // Map every random number to a random direction, and rotate accordingly
     {
         case 1:
             if(Lady_Pos.y < 2 )
@@ -75,7 +75,7 @@ int toggle_direction(sf::Sprite &bug)
     return direction;
 }
 
-void update_pos(sf::Sprite &bug, int direction, float dt)
+void update_pos(sf::Sprite &bug, int direction, float dt) // Update position with differential time.
 {
     switch(direction)
     {
@@ -97,7 +97,7 @@ void update_pos(sf::Sprite &bug, int direction, float dt)
 }
 
 
-void Setup_Myview( sf::View &v, const sf::Vector2f Pos_bug)
+void Setup_Myview( sf::View &v, const sf::Vector2f Pos_bug) // setting up which part of the screen we see, mostly centered around the ladybug.
 {
 
     sf::Vector2f center;
@@ -124,16 +124,18 @@ void Setup_Myview( sf::View &v, const sf::Vector2f Pos_bug)
 
 int main()
 {
-int camera_size = 4;
+int camera_size = 4; //initially we show a 4x4 chess grid.
+//Initializing everything:    
 sf::RenderWindow window(sf::VideoMode({WIDTH, HEIGHT}), "Suicidal Ladybug ");
 
 const sf::Texture bug_text("C:\\Programming\\C++\\SMounce-master\\ladybug.png");
 const sf::Texture background("C:\\Programming\\C++\\SMounce-master\\background.png");
 
-// Create a sprite
+// Create a sprites
 sf::Sprite ladybug(bug_text);
-
 sf::Sprite grid(background);
+
+//Make everything scale accordingly on the screen.    
 grid.sf::Transformable::setScale({24*HEIGHT/(GRID_DIMENSION*n_squares), 24*HEIGHT/(GRID_DIMENSION*n_squares)});
 
 ladybug.sf::Transformable::setOrigin({BUG_DIMENSION/2, BUG_DIMENSION/2});
@@ -143,12 +145,15 @@ ladybug.sf::Transformable::setPosition({side*(Lady_Pos.x-0.5), side*(Lady_Pos.y-
 sf::View view2(ladybug.getPosition(), {side*camera_size, side*camera_size});
 float Camera_last_changed = 0;
 
+
+//initializing time Varialbles:     
 sf::Clock time;
 float time_SEC = 0;
 float dx = 0.f;
 float dt = 0.f;
-int state = toggle_direction(ladybug);
+int state = toggle_direction(ladybug); 
 
+    // GAME LOOP
     while (window.isOpen())
     {
         while (const std::optional event = window.pollEvent())
@@ -161,7 +166,7 @@ int state = toggle_direction(ladybug);
         time_SEC += dt;
         Camera_last_changed += dt; 
 
-
+        
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && Camera_last_changed > 0.2)
         {   
             camera_size++;
