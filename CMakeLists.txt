@@ -15,7 +15,7 @@ FetchContent_MakeAvailable(SFML)
 add_executable(RandomLadybug src/RandomLadybug.cpp)
 add_executable(ArthemeticGame src/ArthemeticGame.cpp)
 add_executable(Graphicalcalc src/Graphicalcalc.cpp)
-
+add_executable(RotateCube src/RotateCube.cpp)
 
 target_compile_features(RandomLadybug PRIVATE cxx_std_17)
 target_link_libraries(RandomLadybug PRIVATE SFML::Graphics)
@@ -26,3 +26,6 @@ target_link_libraries(Graphicalcalc PRIVATE SFML::Graphics)
 
 target_compile_features(ArthemeticGame  PRIVATE cxx_std_17)
 target_link_libraries(ArthemeticGame  PRIVATE SFML::Graphics)
+
+target_compile_features(RotateCube  PRIVATE cxx_std_17)
+target_link_libraries(RotateCube  PRIVATE SFML::Graphics)
